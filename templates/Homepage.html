@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>带筛选的泡泡展示页面</title>
+    <link rel="stylesheet" href="../static/Homepage.css">
+</head>
+<body>
+
+<div class="filters">
+    <label for="maxCount">最大数量:</label>
+    <input type="number" id="maxCount" name="maxCount">
+
+    <label for="tags">选择标签:</label>
+    <select id="tags" name="tags">
+        <option value="">请选择...</option>
+        <!-- 标签选项 -->
+        <option value="tag1">标签1</option>
+        <option value="tag2">标签2</option>
+        <option value="tag3">标签3</option>
+    </select>
+
+    <button onclick="applyFilters()">应用筛选</button>
+</div>
+
+<div class="bubble-container">
+    <!-- 动态添加满足条件的泡泡内容 -->
+</div>
+
+<script src="../static/Homepage.js"></script>
+</body>
+</html>
