@@ -3,31 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>带筛选的泡泡展示页面</title>
+    <title>Post Analysis</title>
     <link rel="stylesheet" href="../static/Homepage.css">
 </head>
 <body>
 
 <div class="filters">
-    <label for="maxCount">最大数量:</label>
+    <label for="maxCount">maximum number:</label>
     <input type="number" id="maxCount" name="maxCount">
 
-    <label for="tags">选择标签:</label>
+    <label for="tags">Select Tag:</label>
     <select id="tags" name="tags">
-        <option value="">请选择...</option>
-        <!-- 标签选项 -->
-        <option value="tag1">标签1</option>
-        <option value="tag2">标签2</option>
-        <option value="tag3">标签3</option>
+        <option value="">Choose...</option>
+        <option value="#INFORMS2023">#INFORMS2023</option>
+        <option value="#Logistics">#Logistics</option>
+        <option value="#informs2023">#informs2023</option>
     </select>
 
-    <button onclick="applyFilters()">应用筛选</button>
+    <button onclick="applyFilters()">Apply</button>
 </div>
 
 <div class="bubble-container">
-    <!-- 动态添加满足条件的泡泡内容 -->
 </div>
 
-<script src="../static/Homepage.js"></script>
 </body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+function applyFilters() {
+    // Getting Filter Criteria
+    const maxCount = document.getElementById('maxCount').value;
+    const selectedTag = document.getElementById('tags').value;
+
+    // Using axios to send a POST request to the Flask backend
+    axios.post('/filter-users', {
+        maxCount: parseInt(maxCount, 10),
+        tag: selectedTag
+    })
+    .then(function (response) {
+        // Processing of returned user avatar information
+        console.log(response)
+        displayBubbles(response.data);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
+function displayBubbles(data) {
+    const container = document.querySelector('.bubble-container');
+    container.innerHTML = ''; // Empty existing content
+
+    const avatars = data[0];
+    const urls = data[1];
+
+    avatars.forEach((avatar, index) => {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+
+        // Create elements that contain avatars and links
+        const link = document.createElement('a');
+        link.href = urls[index]; // Setting the link address
+        link.target = '_blank'; // Open link in new tab
+
+        const img = document.createElement('img');
+        img.src = avatar;
+        img.alt = "用户头像";
+
+        // Add the avatar image to the link element and then add the link element to the bubble
+        link.appendChild(img);
+        bubble.appendChild(link);
+
+        // Adding Bubbles to a Container
+        container.appendChild(bubble);
+    });
+}
+
+</script>
 </html>
