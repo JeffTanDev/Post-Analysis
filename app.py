@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import json
 
+
 app = Flask(__name__)
 
 
@@ -11,10 +12,10 @@ def root():
 
 @app.route('/filter-users', methods=['POST'])
 def filter_users():
-    # Loading user data
+    ## Right now I just used "INFORMS2023" data we have as a demo, we'll change to a more logic data latter.
     with open('tweet.json', 'r', encoding='utf-8') as file:
         users = json.load(file)
-    # Get maxCount and tag from request
+    # Get maxCount and hashtag from post
     data = request.get_json()
     max_count = data.get('maxCount')
     tag = data.get('tag')
@@ -22,7 +23,7 @@ def filter_users():
     for user in users:
         if tag in user['tweet_hashtags']:
             filtered_user.append(user)
-    # Sort by the sum of replies and likes for each user.
+    # Sort by the sum of replies likes and retweet for each user.
     sorted_users = sorted(filtered_user, key=lambda user: user['replies'] + user['likes'] + user['retweets'],
                           reverse=True)
 
