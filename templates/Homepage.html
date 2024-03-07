@@ -32,7 +32,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 function applyFilters() {
-    // Getting Filter Criteria
+    // Getting Filter value
     const maxCount = document.getElementById('maxCount').value;
     const selectedTag = document.getElementById('tags').value;
 
@@ -42,7 +42,7 @@ function applyFilters() {
         tag: selectedTag
     })
     .then(function (response) {
-        // Processing of returned user avatar information
+        // Processing of returned user avatar
         console.log(response)
         displayBubbles(response.data);
     })
@@ -69,7 +69,7 @@ function displayBubbles(data) {
 
         const img = document.createElement('img');
         img.src = avatar;
-        img.alt = "用户头像";
+        img.alt = "user avatar";
 
         // Add the avatar image to the link element and then add the link element to the bubble
         link.appendChild(img);
